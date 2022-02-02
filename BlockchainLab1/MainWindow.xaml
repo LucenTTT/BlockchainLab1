@@ -1,0 +1,53 @@
+﻿<Window x:Class="BlockchainLab1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BlockchainLab1"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800"
+        d:DataContext="local:AppViewModel">
+    <Window.Resources>
+        <local:RadioButtonConverter x:Key="RadioButtonConverter" />
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="100"/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="SHA-256 Hash"
+                   FontSize="48"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center" />
+        <StackPanel Orientation="Horizontal"
+                    Grid.Row="1"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center">
+            <RadioButton Name="StringRadioButton"
+                         IsChecked="{Binding WhatHashMode, Converter={StaticResource RadioButtonConverter}, ConverterParameter={x:Static local:Mode.String}}"
+                         VerticalAlignment="Center"
+                         HorizontalAlignment="Center" 
+                         Content="Hash String"
+                         Command="{Binding ChangeMode}"
+                         CommandParameter="{x:Static local:Mode.String}"/>
+            <RadioButton Name="FileRadioButton"
+                         IsChecked="{Binding WhatHashMode, Converter={StaticResource RadioButtonConverter}, ConverterParameter={x:Static local:Mode.File}}"
+                         VerticalAlignment="Center"
+                         HorizontalAlignment="Center"
+                         Content="Hash File"
+                         Command="{Binding ChangeMode}"
+                         CommandParameter="{x:Static local:Mode.File}" />
+        </StackPanel>
+        <StackPanel Orientation="Vertical" Grid.Row="2">
+        <TextBox Text="{Binding Text}" Height="60" />
+        <Button Content="Hash" 
+                Height="25"
+                Width="50"
+                Command="{Binding HashCommand}" />
+        </StackPanel>
+        <TextBox Text="{Binding Hash}"
+                 Grid.Row="3" />
+    </Grid>
+</Window>
